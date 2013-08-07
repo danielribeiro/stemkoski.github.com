@@ -19,6 +19,8 @@
 
 <script src="js/Three.js"></script>
 <script src="js/OrbitControls.js"></script>
+<script src="OBJLoader.js"></script>
+<script src="objdata.js"></script>
 
 <!-- Code to display an information button and box when clicked. -->
 
@@ -76,12 +78,30 @@ function init()
 	////////////
 	// CUSTOM //
 	////////////
-	
-	var geometry = new THREE.SphereGeometry( 30, 32, 16 );
-	var material = new THREE.MeshLambertMaterial( { color: 0x000088 } );
-	mesh = new THREE.Mesh( geometry, material );
-	mesh.position.set(0,40,0);
-	scene.add(mesh);
+	var material = new THREE.MeshNormalMaterial();
+	var loader = new THREE.OBJLoader();
+	var doit = function (object) {
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material = material;
+
+			}
+
+		} );
+
+		object.position.y = - 80;
+		object.scale.set(20, 20, 20)
+		scene.add( object );
+	}
+
+
+	var objmesh = loader.parse(objdata.join("\n"));
+	doit(objmesh);
+
+	objmesh.position.set(0,40,0);
+	scene.add(objmesh);
 	
 }
 
