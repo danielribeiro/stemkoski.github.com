@@ -71,7 +71,7 @@ function init()
 	THREEx.WindowResize(renderer, camera);
 	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
 	// CONTROLS
-	controls = new THREE.TrackballControls( camera );
+	controls = new THREE.OrbitControls( camera );
 	// STATS
 	stats = new Stats();
 	stats.domElement.style.position = 'absolute';
