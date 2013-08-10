@@ -101,17 +101,25 @@ function init()
 	var axes = new THREE.AxisHelper(100);
 	scene.add( axes );
 	
-	var imagePrefix = "images/dawnmountain-";
-	var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-	var imageSuffix = ".png";
-	var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );	
+	var imagePrefix = "skyboxes/sky1/";
+	var directions  = ["sright", "sleft","stop", "yneg", "sfront",  "sback"];
+	var imageSuffix = "37.jpg";
+	var s = 5000
+	var skyGeometry = new THREE.CubeGeometry( s, s, s );	
+	var downImage = "images/checkerboard.jpg";
 	
 	var materialArray = [];
-	for (var i = 0; i < 6; i++)
+	for (var i = 0; i < 6; i++) {
+		var at = directions[i];
+		var textName = imagePrefix + at + imageSuffix;
+		if (at == "yneg") {
+			textName = downImage;
+		}
 		materialArray.push( new THREE.MeshBasicMaterial({
-			map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+			map: THREE.ImageUtils.loadTexture(textName),
 			side: THREE.BackSide
 		}));
+	}
 	var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
 	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
 	scene.add( skyBox );
